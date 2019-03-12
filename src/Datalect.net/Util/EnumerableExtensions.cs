@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
-namespace Datalect.Sql
+namespace Datalect.Util
 {
-    internal static class EnumerableExtensions
+    public static class EnumerableExtensions
     {
         public static IEnumerable<T> Interpose<T>(this IEnumerable<T> items, T value)
         {
