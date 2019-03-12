@@ -50,6 +50,18 @@ namespace Datalect.Sql
             }
         }
 
+        public static object WithTableExpressions(params (string Alias, object Query)[] expressions)
+        {
+            expressions = expressions.RemoveNulls().ToArray();
+            if(expressions.Length == 0)
+                return "";
+            return expressions.Aggregate(
+                ImmutableList<object>.Empty.Add("WITH"),
+                (with, cte) =>
+                with.Add(cte.Alias).Add("AS").Add("(").Add(cte.Query).Add(")").Add(","),
+                with => with.RemoveAt(with.Count - 1));
+        }
+
         public static IQuery Build(params object[] sqlOrBindVariables)
         {
             string NormalizeDescription(string bindVariablePart) =>
